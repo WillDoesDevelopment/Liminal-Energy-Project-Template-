@@ -55,6 +55,7 @@ public class CustomMesh : MonoBehaviour
         {
             for (int x= 0; x < MeshGridSize_x; x++)
             {
+                float y_Pos = Mathf.Abs(x - MeshGridSize_x / 2)*1.5f - 15;
                 int ix = getVertix(x, y);
                 float dx = x - MeshGridSize_x / 2;
                 float dy = y - MeshGridSize_y / 2;
@@ -62,8 +63,11 @@ public class CustomMesh : MonoBehaviour
                 float r2 = dx*dx+dy*dy;
                 float alpha = 0.1f;
                 float coeff = (1f + alpha * Mathf.Pow(r2, 0.25f));
-
-                Verts[ix] = new Vector3(MeshGridSize_x/2 + dx*coeff, 0, Mathf.Pow(y,1.25f));
+/*                if (y_Pos < 0)
+                {
+                    y_Pos = 0;
+                }*/
+                Verts[ix] = new Vector3(MeshGridSize_x/2 + dx*coeff,y_Pos, Mathf.Pow(y,1.25f));
 
                 UVs[ix] = new Vector2(y, x);
             }
@@ -93,7 +97,7 @@ public class CustomMesh : MonoBehaviour
         mesh.RecalculateNormals();
 
 
-        GetComponent<Renderer>().material.SetFloat("_gridSize", MeshGridSize_x);
+        GetComponent<Renderer>().material.SetFloat("_GridSize", MeshGridSize_x);
     }
 
     // Update is called once per frame

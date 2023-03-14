@@ -31,7 +31,7 @@ public class ValleyManager : MonoBehaviour
 
             if(i%2 == 0)
             {
-                ValleyObjs[i].transform.localScale = new Vector3(1, 1, -1.1f);
+                ValleyObjs[i].transform.localScale = new Vector3(1, 1, -1f);
                 ValleyObjs[i].transform.position += new Vector3(0,0,CM.MeshGridLength);
             }
 
@@ -43,7 +43,7 @@ public class ValleyManager : MonoBehaviour
     {
         for (int i = 0; i < ValleyObjs.Length; i++)
         {
-            //ValleyObjs[i].transform.position += new Vector3(0f, 0f, -10f * Time.deltaTime);
+            ValleyObjs[i].transform.position += new Vector3(0f, 0f, -10f * Time.deltaTime);
 
             if (ValleyObjs[i].transform.position.z < Camera.transform.position.z - CM.MeshGridLength )
             {

@@ -55,6 +55,10 @@ public class AudioManager : MonoBehaviour
     void Update()
     {
         //Debug.Log(samples[Mathf.RoundToInt(backGroundMusic.time * backGroundMusic.clip.frequency)]);
-        ShaderMat.SetFloat("_MusicInput", Mathf.Pow( samples[Mathf.RoundToInt(backGroundMusic.time * backGroundMusic.clip.frequency*2)],5));
+        if (Mathf.RoundToInt( backGroundMusic.time )==5)
+        {
+            ShaderMat.SetFloat("_MusicInput", Mathf.Pow( samples[Mathf.RoundToInt(backGroundMusic.time * backGroundMusic.clip.frequency*2)],5));
+
+        }
     }
 }

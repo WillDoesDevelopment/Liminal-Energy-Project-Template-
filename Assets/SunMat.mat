@@ -7,11 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CustomMeshMat
-  m_Shader: {fileID: -6465566751694194690, guid: d671e40c414a7e8488a9ac8d9bc9c465,
+  m_Name: SunMat
+  m_Shader: {fileID: -6465566751694194690, guid: 6cd4ebb701903f54d90dfc302a70c82a,
     type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_ShaderKeywords: _EMISSION
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -49,10 +49,6 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_1C6A25D0: 4.11
-    - Vector1_871A938A: 15.38
-    - Vector1_8B2AB603: 25.65
-    - Vector1_B4694DAB: 18.17
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -63,14 +59,12 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _GridSize: 0
     - _Metallic: 0
-    - _MusicInput: -5.5113114e-10
     - _OcclusionStrength: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Res: 60
-    - _Smoothness: 0.5
+    - _SampleGI: 0
+    - _Smoothness: 0.54
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -78,11 +72,11 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _BaseColor: {r: 1, g: 0.9685757, b: 0, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 16, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
---- !u!114 &3024353498373806761
+--- !u!114 &2255624683153799169
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

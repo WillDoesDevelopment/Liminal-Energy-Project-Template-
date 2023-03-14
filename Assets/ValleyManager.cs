@@ -48,7 +48,7 @@ public class ValleyManager : MonoBehaviour
             if (ValleyObjs[i].transform.position.z < Camera.transform.position.z - CM.MeshGridLength )
             {
                 //ValleyObjs[i].SetActive(false);
-                ValleyObjs[i].transform.position = new Vector3(0,0,(CM.MeshGridLength-2.9f) *(ValleyAmount-1));
+                ValleyObjs[i].transform.position = new Vector3(0,0,(CM.MeshGridLength) *(ValleyAmount-1));
             }
         }
     }

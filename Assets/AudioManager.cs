@@ -31,6 +31,8 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ShaderMat.SetFloat("_MusicInput", 5);
+
         float frequency = backGroundMusic.clip.frequency;
         int nsamples = backGroundMusic.clip.samples;
         float length = backGroundMusic.clip.length;
@@ -57,7 +59,8 @@ public class AudioManager : MonoBehaviour
         //Debug.Log(samples[Mathf.RoundToInt(backGroundMusic.time * backGroundMusic.clip.frequency)]);
         if (Mathf.RoundToInt( backGroundMusic.time )==5)
         {
-            ShaderMat.SetFloat("_MusicInput", Mathf.Pow( samples[Mathf.RoundToInt(backGroundMusic.time * backGroundMusic.clip.frequency*2)],5));
+            ShaderMat.SetFloat("_MusicInput",0);
+            //ShaderMat.SetFloat("_MusicInput", Mathf.Pow( samples[Mathf.RoundToInt(backGroundMusic.time * backGroundMusic.clip.frequency*2)],5));
 
         }
     }

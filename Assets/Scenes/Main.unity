@@ -556,7 +556,7 @@ MonoBehaviour:
   backGroundMusic: {fileID: 776419139}
   CM: {fileID: 1954536545}
   Camera: {fileID: 1676988087}
-  ValleyAmount: 9
+  ValleyAmount: 18
   CustomMeshObj: {fileID: 1954536544}
   ValleyObjs: []
   gapAdjustment: 2.27
@@ -779,7 +779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MeshGridSize_x: 60
-  MeshGridSize_y: 50
+  MeshGridSize_y: 25
   MeshGridLength: 0
   mesh: {fileID: 0}
   TargetModel: {fileID: 0}

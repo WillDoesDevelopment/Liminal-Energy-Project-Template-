@@ -12,7 +12,7 @@ Material:
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -50,8 +50,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_1C6A25D0: 170
-    - Vector1_871A938A: 15.38
-    - Vector1_8B2AB603: 7
+    - Vector1_871A938A: -0.4
+    - Vector1_8B2AB603: 8.47
+    - Vector1_8B620C5E: 0.32
     - Vector1_B4694DAB: 18.17
     - _AlphaClip: 0
     - _Blend: 0
@@ -63,13 +64,13 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _GridSize: 0
+    - _GridSize: 60
     - _Metallic: 0
-    - _MusicInput: 0
+    - _MusicInput: 0.05783081
     - _OcclusionStrength: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Res: 60
+    - _Res: 74
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1

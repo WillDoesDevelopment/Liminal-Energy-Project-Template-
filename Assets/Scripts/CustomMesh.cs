@@ -69,7 +69,8 @@ public class CustomMesh : MonoBehaviour
                 {
                     y_Pos = 0;
                 }*/
-                Verts[ix] = new Vector3(x,y_Pos,Mathf.Pow(y, 1.25f));
+                Verts[ix] = new Vector3(x,y_Pos,y);
+                //Verts[ix] = new Vector3(x,y_Pos,Mathf.Pow(y, 1.25f));
 
                 UVs[ix] = new Vector2(y, x);
             }

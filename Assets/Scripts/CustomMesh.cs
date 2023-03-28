@@ -69,12 +69,12 @@ public class CustomMesh : MonoBehaviour
                 {
                     y_Pos = 0;
                 }*/
-                Verts[ix] = new Vector3(MeshGridSize_x/2 + dx*coeff,y_Pos,Mathf.RoundToInt( Mathf.Pow(y,1.25f)));
+                Verts[ix] = new Vector3(x,y_Pos,Mathf.Pow(y, 1.25f));
 
                 UVs[ix] = new Vector2(y, x);
             }
         }
-        MeshGridLength = Mathf.RoundToInt( Mathf.Pow(MeshGridSize_y-1, 1.25f));
+        MeshGridLength =  Mathf.Pow(MeshGridSize_y-1, 1.25f);
 
         for (int y = 0; y<MeshGridSize_y-1; y++)
         {

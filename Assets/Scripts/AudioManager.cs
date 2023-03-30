@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Numerics;
+using System.IO;
 
 public class AudioManager : MonoBehaviour
 {
@@ -207,7 +208,7 @@ public class AudioManager : MonoBehaviour
         int[] freqbands = { 43, 60, 86, 120, 172, 240, 342, 480, 684, 960, 1368 };
         float[] freqscale = { 1f, 1f, 0.1f, 0.001f, };
 
-        int numtiles = 1 + (nsamples - numsamples) / sampledist;
+/*        int numtiles = 1 + (nsamples - numsamples) / sampledist;
 
         texture = new Texture2D(numtiles, 10, TextureFormat.ARGB32, false);
 
@@ -236,18 +237,17 @@ public class AudioManager : MonoBehaviour
                 }
 
             }
-            byte[] bytes = texture.EncodeToPNG();
-            var dirPath = Application.dataPath + "/../SaveImages/";
-            Debug.Log(dirPath);
-/*            if (!Directory.Exists(dirPath))
-            {
-                Directory.CreateDirectory(dirPath);
-            }
-            File.WriteAllBytes(dirPath + "Image" + ".png", bytes);*/
+    }
+        byte[] bytes = texture.EncodeToPNG();
+        var dirPath = Application.dataPath"/../Saved Fourrier Images/";
+        if (!Directory.Exists(dirPath))
+        {
+            Directory.CreateDirectory(dirPath);
         }
-       
+        File.WriteAllBytes(dirPath + "FourierTexture2D" + ".png", bytes);
+       */
         
-        texture.Apply();
+        //texture.Apply();
         ShaderMat.SetTexture("_musicTexture", texture);
     }
     void Update()

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Numerics;
 
 public class AudioManager : MonoBehaviour
 {
@@ -14,24 +14,22 @@ public class AudioManager : MonoBehaviour
 
     public Texture2D texture;
 
-    private double[] Sample(float[] samples, int Channels, int beginning, int length )
+    private Complex[] Sample(float[] samples, int Channels, int beginning, int length )
     {
-        double[] newSamples = new double[2*length];
+        Complex[] newSamples = new Complex[length];
         for (int i = 0; i < length; i++)
         {
+            int pos = beginning + i;
             double v = 0;
             for(int c=0; c < Channels; c++)
             {
-                v += (double)samples[Channels * i + c];
+                v += (double)samples[Channels * pos + c];
             }
 
             // array of complex numbers with imaginary value zero ready for fourier transform            
-            newSamples[2*i] = v;
-            newSamples[2*i + 1] = 0;
-
+            newSamples[i] = v;
         }
-        //Debug.Log("Merged sample length" + newSamples.Length );
-        //Debug.Log("middle val" + newSamples[newSamples.Length/2]);
+
         return newSamples;
     }
     // Start is called before the first frame update
@@ -98,6 +96,83 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
+
+    public static Complex[] FFT(Complex[] input, bool invert)
+    {
+        //in case there is only one element
+        if (input.Length == 1)
+        {
+            return new Complex[] { input[0] };
+        }
+
+        //for more elements we need to otain the lenght of the input data stream
+        int length = input.Length;
+
+        //half will be the half of the lenght
+        int half = length / 2;
+
+        //this is the result of the FFT
+        Complex[] result = new Complex[length];
+
+        // factor that goes in the
+        double factorEXP = -2.0 * System.Math.PI / length;
+
+        //in case we want to invert the factor
+        if (invert)
+        {
+            factorEXP = -factorEXP;
+        }
+
+
+        //
+        // Cooley–Tukey algorithm. This is a divide and conquer algorithm that recursively breaks down a DFT of any composite size N = N1N2 into many smaller DFTs of sizes N1 and N2,
+        // it is divided into even and odd components
+        //
+
+        //even
+        Complex[] evens = new Complex[half];
+        for (int i = 0; i < half; i++)
+        {
+            evens[i] = input[2 * i];
+        }
+        //FFT recursive call
+        Complex[] evenResult = FFT(evens, invert);
+
+        //odd
+        Complex[] odds = evens;
+        for (int i = 0; i < half; i++)
+        {
+            odds[i] = input[2 * i + 1];
+        }
+        // FFT recursive call
+        Complex[] oddResult = FFT(odds, invert);
+
+
+        // final algorithm
+        //          N/2-1                                N/2-1
+        //   FFT_k= SUM  X_2n ·e^(-2*pi*(2n)*k)/(N/2)  +  SUM  X_2n+1 ·e^(-2*pi*(2n+1)*k)/(N/2) 
+        //           0                                    0
+        //
+        // = Even_k + O_k·e^(-2*pi**k)/(N)
+
+        for (int k = 0; k < half; k++)
+        {
+            double factor_K = factorEXP * k;
+
+            //                     odd part   &  this is the second part that is added module 1 argument factor_k
+            Complex oddComponent = oddResult[k] * new Complex(1 * System.Math.Cos(factor_K), 1 * System.Math.Sin(factor_K));
+
+            //first part of the chart
+            result[k] = evenResult[k] + oddComponent;
+            //second part of the chart
+            result[k + half] = evenResult[k] - oddComponent;
+        }
+
+        //reutrn the values (complex). To show FFT we need to display module or "abs" of the complex number
+        return result;
+    }
+
+
     void Start()
     {
        
@@ -111,7 +186,6 @@ public class AudioManager : MonoBehaviour
         float length = backGroundMusic.clip.length;
         int nchannels = backGroundMusic.clip.channels;
 
-        //samples = new float[backGroundMusic.clip.samples];
         samples = new float[nsamples*nchannels];
         backGroundMusic.clip.GetData(samples, 0);
 
@@ -131,36 +205,51 @@ public class AudioManager : MonoBehaviour
         int numsamples = 1 << 13;
         int sampledist = (int) frequency / 10;
         int[] freqbands = { 43, 60, 86, 120, 172, 240, 342, 480, 684, 960, 1368 };
+        float[] freqscale = { 1f, 1f, 0.1f, 0.001f, };
 
         int numtiles = 1 + (nsamples - numsamples) / sampledist;
 
         texture = new Texture2D(numtiles, 10, TextureFormat.ARGB32, false);
-        //texture = new Texture2D(2048, 16, TextureFormat.ARGB32, false);
+
+        double[] MaxE = new double[10] { 0,0,0,0,0,0,0,0,0,0 };
 
         for(int t=0; t < numtiles; t++)
         {
-            double[] data = Sample(samples, nchannels, t*sampledist, numsamples);
-            Forrier(data, logsamplelength, 1);
-            //double[] freqenergy = new double[10];
+            Complex[] data = Sample(samples, nchannels, t*sampledist, numsamples);
+            Complex[] Freq = FFT(data, false);
+            //Complex[] Freq = data;
+
             for (int f = 0; f < 10; f++)
             {
                 double energy = 0;
                 for (int f1 = freqbands[f]; f1 < freqbands[f + 1]; f1++)
                 {
-                    energy += data[2 * f1] * data[2 * f1] + data[2 * f1 + 1] * data[2 * f1 + 1];
+                    double M = Freq[f1].Magnitude;
+                    energy += M*M;
                 }
-                Color color = new Color((float)( energy), 0,0, 1);
-                Debug.Log((float)(energy));
-                //texture.SetPixel(t,f, new Vector4((float)(10 * energy), (float)(10 * energy), (float)(10 * energy), (float)(10 * energy)));
+                //Color color = new Color(Mathf.Sin((t+f)/10), 0,0, 1);
+                Color color = new Color((float)(0.000001*energy),0,0,1);
                 texture.SetPixel(t,f, color);
+                if (energy > MaxE[f])
+                {
+                    MaxE[f] = energy;
+                }
+
             }
+            byte[] bytes = texture.EncodeToPNG();
+            var dirPath = Application.dataPath + "/../SaveImages/";
+            Debug.Log(dirPath);
+/*            if (!Directory.Exists(dirPath))
+            {
+                Directory.CreateDirectory(dirPath);
+            }
+            File.WriteAllBytes(dirPath + "Image" + ".png", bytes);*/
         }
+       
         
         texture.Apply();
         ShaderMat.SetTexture("_musicTexture", texture);
     }
-
-    // Update is called once per frame
     void Update()
     {
             //Debug.Log(backGroundMusic.time);

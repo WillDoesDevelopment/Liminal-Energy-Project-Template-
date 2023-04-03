@@ -190,13 +190,13 @@ public class AudioManager : MonoBehaviour
         samples = new float[nsamples*nchannels];
         backGroundMusic.clip.GetData(samples, 0);
 
-  /*      Debug.Log("array length" + samples.Length);
+        Debug.Log("array length" + samples.Length);
         Debug.Log("freq" + frequency);
         Debug.Log( "channels" + nchannels);
         Debug.Log("samples" + nsamples);
         Debug.Log("Duration" + length);
         Debug.Log("freq*channels*duration" + frequency*nchannels*length);
-*/
+
 
         //Debug.Log(samples[48000 * 3] * 1000000);
         //samples = MergeChanels(samples, nchannels,nsamples,0,2048);
@@ -205,16 +205,16 @@ public class AudioManager : MonoBehaviour
         int logsamplelength = 13;
         int numsamples = 1 << 13;
         int sampledist = (int) frequency / 10;
-        int[] freqbands = { 43, 60, 86, 120, 172, 240, 342, 480, 684, 960, 1368 };
+        int[] freqbands = { 40, 56, 65, 82, 90, 108, 115, 124, 140, 160, 260 };
         float[] freqscale = { 1f, 1f, 0.1f, 0.001f, };
 
-/*        int numtiles = 1 + (nsamples - numsamples) / sampledist;
+        int numtiles = 1 + (nsamples - numsamples) / sampledist;
 
         texture = new Texture2D(numtiles, 10, TextureFormat.ARGB32, false);
 
         double[] MaxE = new double[10] { 0,0,0,0,0,0,0,0,0,0 };
 
-        for(int t=0; t < numtiles; t++)
+/*       for(int t=0; t < numtiles; t++)
         {
             Complex[] data = Sample(samples, nchannels, t*sampledist, numsamples);
             Complex[] Freq = FFT(data, false);
@@ -237,18 +237,19 @@ public class AudioManager : MonoBehaviour
                 }
 
             }
-    }
-        byte[] bytes = texture.EncodeToPNG();
-        var dirPath = Application.dataPath"/../Saved Fourrier Images/";
+    }*/
+
+/*        byte[] bytes = texture.EncodeToPNG();
+        var dirPath = Application.dataPath + "/../Saved Fourrier Images/";
         if (!Directory.Exists(dirPath))
         {
             Directory.CreateDirectory(dirPath);
         }
-        File.WriteAllBytes(dirPath + "FourierTexture2D" + ".png", bytes);
+        File.WriteAllBytes(dirPath + "V3FourierTexture2D" + ".png", bytes);
        */
         
         //texture.Apply();
-        ShaderMat.SetTexture("_musicTexture", texture);
+        //ShaderMat.SetTexture("_musicTexture", texture);
     }
     void Update()
     {

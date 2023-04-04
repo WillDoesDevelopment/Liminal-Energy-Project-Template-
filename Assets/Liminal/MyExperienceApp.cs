@@ -9,6 +9,11 @@ namespace Liminal.Experience
     /// </summary>
     public class MyExperienceApp : ExperienceApp
     {
+        void Start()
+        {
+            //var device = VRDevice.Device;
+            //var rightHand = device.PrimaryHand;
+        }
         public override void Pause()
         {
             base.Pause();

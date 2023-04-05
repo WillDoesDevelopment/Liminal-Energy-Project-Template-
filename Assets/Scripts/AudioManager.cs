@@ -190,12 +190,12 @@ public class AudioManager : MonoBehaviour
         samples = new float[nsamples*nchannels];
         backGroundMusic.clip.GetData(samples, 0);
 
-        Debug.Log("array length" + samples.Length);
+/*        Debug.Log("array length" + samples.Length);
         Debug.Log("freq" + frequency);
         Debug.Log( "channels" + nchannels);
         Debug.Log("samples" + nsamples);
         Debug.Log("Duration" + length);
-        Debug.Log("freq*channels*duration" + frequency*nchannels*length);
+        Debug.Log("freq*channels*duration" + frequency*nchannels*length);*/
 
 
         //Debug.Log(samples[48000 * 3] * 1000000);

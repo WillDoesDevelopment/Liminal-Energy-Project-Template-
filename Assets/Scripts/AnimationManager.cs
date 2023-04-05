@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
 {
-    [SerializeField] public Animator SunRiseAnim;
+    //[SerializeField] public Animator SunRiseAnim;
     public GameObject SunObj;
     private int gameDuration = 170;
     public AudioSource BackgroundMusic;
+
+    public ParticleSystem WorldParticles;
 
     public Texture2D Fourrier;
 
@@ -21,6 +23,7 @@ public class AnimationManager : MonoBehaviour
     void Update()
     {
         SunSpinInput();
+        ParticlesOverTime();
     }
 
 
@@ -39,5 +42,9 @@ public class AnimationManager : MonoBehaviour
         SunObj.transform.GetChild(0).transform.eulerAngles += new Vector3(0,50*Time.deltaTime,0);
         SunObj.transform.GetChild(1).transform.eulerAngles += new Vector3(0,50*Time.deltaTime,0);
 
+    }
+    public void ParticlesOverTime()
+    {
+        WorldParticles.emissionRate = Time.time/2;
     }
 }

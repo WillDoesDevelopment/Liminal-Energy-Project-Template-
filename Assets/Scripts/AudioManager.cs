@@ -202,21 +202,24 @@ public class AudioManager : MonoBehaviour
         //samples = MergeChanels(samples, nchannels,nsamples,0,2048);
         //Debug.Log(samples[48000 * 3] * 1000000);
 
-        int logsamplelength = 13;
-        int numsamples = 1 << 13;
-        int sampledist = (int) frequency / 10;
-        int[] freqbands = { 40, 56, 65, 82, 90, 108, 115, 124, 140, 160, 260 };
+        int logsamplelength = 10;
+        int numsamples = 1 << logsamplelength;
+        //int sampledist = (int) frequency / 100;
+        int sampledist = numsamples;
+        //int[] freqbands = { 40, 56, 65, 82, 90, 108, 115, 124, 140, 160, 260 };
+        int[] freqbands = { 21, 25, 30, 36, 42, 50, 60,72, 84,100, 144 };
         float[] freqscale = { 1f, 1f, 0.1f, 0.001f, };
 
         int numtiles = 1 + (nsamples - numsamples) / sampledist;
 
         texture = new Texture2D(numtiles, 10, TextureFormat.ARGB32, false);
+        float[,] energyArr = new float[numtiles, 10];
 
         double[] MaxE = new double[10] { 0,0,0,0,0,0,0,0,0,0 };
 
-/*       for(int t=0; t < numtiles; t++)
+       /* for (int t = 0; t < numtiles; t++)
         {
-            Complex[] data = Sample(samples, nchannels, t*sampledist, numsamples);
+            Complex[] data = Sample(samples, nchannels, t * sampledist, numsamples);
             Complex[] Freq = FFT(data, false);
             //Complex[] Freq = data;
 
@@ -226,29 +229,39 @@ public class AudioManager : MonoBehaviour
                 for (int f1 = freqbands[f]; f1 < freqbands[f + 1]; f1++)
                 {
                     double M = Freq[f1].Magnitude;
-                    energy += M*M;
+                    energy += M * M;
                 }
                 //Color color = new Color(Mathf.Sin((t+f)/10), 0,0, 1);
-                Color color = new Color((float)(0.000001*energy),0,0,1);
-                texture.SetPixel(t,f, color);
+                //Color color = new Color((float)(0.00001 * energy), 0, 0, 1);
+
+                //texture.SetPixel(t,f, color);
+                energyArr[t, f] = (float) energy;
                 if (energy > MaxE[f])
                 {
                     MaxE[f] = energy;
                 }
 
             }
-    }*/
+        }
+        for(int t=0; t<numtiles; t++)
+        {
+            for(int f=0; f<10; f++)
+            {
+                Color color = new Color((float)(2*(energyArr[t,f])/MaxE[f]), 0, 0, 1);
+                texture.SetPixel(t, f, color);
+            }
+        }
+        //texture.Apply();
 
-/*        byte[] bytes = texture.EncodeToPNG();
+        byte[] bytes = texture.EncodeToPNG();
         var dirPath = Application.dataPath + "/../Saved Fourrier Images/";
         if (!Directory.Exists(dirPath))
         {
             Directory.CreateDirectory(dirPath);
         }
-        File.WriteAllBytes(dirPath + "V3FourierTexture2D" + ".png", bytes);
-       */
-        
-        //texture.Apply();
+        File.WriteAllBytes(dirPath + "1K_5K_100sps_FourierTexture2D_new2" + ".png", bytes);
+*/
+
         //ShaderMat.SetTexture("_musicTexture", texture);
     }
     void Update()

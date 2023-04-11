@@ -49,14 +49,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _musicTexture:
-        m_Texture: {fileID: 2800000, guid: e1d4a726ade912e479b16413b7890709, type: 3}
+        m_Texture: {fileID: 2800000, guid: 24465e172fdc930499283e94bb4e5376, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_1C6A25D0: 170
-    - Vector1_643591DC: 5.7
+    - Vector1_1C6A25D0: 172
+    - Vector1_643591DC: 12.15
     - Vector1_871A938A: 1.68
-    - Vector1_8B2AB603: 6.43
+    - Vector1_8B2AB603: 4.66
     - Vector1_8B620C5E: 0.32
     - Vector1_B4694DAB: 18.17
     - _AlphaClip: 0

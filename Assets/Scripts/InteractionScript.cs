@@ -45,7 +45,7 @@ public class InteractionScript : MonoBehaviour
         {
             Ray ray = new Ray(RightHandObj.transform.position, RightHandObj.transform.forward);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100))
+            if (Physics.Raycast(ray, out hit, 200))
             {
                 Interacted = true;
                 if(hit.transform.GetComponentInParent<InteractionObjScript>() != null)
@@ -59,7 +59,7 @@ public class InteractionScript : MonoBehaviour
             Ray ray = new Ray(LeftHandObj.transform.position, LeftHandObj.transform.forward);
 
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 500))
+            if (Physics.Raycast(ray, out hit, 200))
             {
                 Debug.Log(hit.transform.gameObject);
                 Interacted = true;
@@ -74,30 +74,12 @@ public class InteractionScript : MonoBehaviour
     private void Spawn()
     {
         float[] MusicValArr = new float[10];
-        /*
 
-                Color MusicVal1 = Fourrier.GetPixel(Mathf.RoundToInt(BackgroundMusic.time * 100), testChanell, 0);
-                Color MusicVal2= Fourrier.GetPixel(Mathf.RoundToInt(BackgroundMusic.time * 100+1), testChanell, 0);
-                Color MusicVal0 = Fourrier.GetPixel(Mathf.RoundToInt(BackgroundMusic.time * 100-1), testChanell, 0);
-                MusicValArr[1] = Mathf.Pow(MusicVal1.r, 2);
-                MusicValArr[0] = Mathf.Pow(MusicVal0.r, 2);
-                MusicValArr[2] = Mathf.Pow(MusicVal2.r, 2);
-
-                //if (MusicValArr[testChanell] > threshholds[testChanell] && SpawnCoolDown == false)
-                if (MusicValArr[1] > MusicValArr[0] && MusicValArr[1] > MusicValArr[2] && SpawnCoolDown == false && MusicValArr[1]>.04)
-                {
-                    Debug.Log("Music val" + MusicVal1);
-                    var NewObj = Instantiate(InteractionObj, this.transform.position + new Vector3(Random.Range(-5, 5), 0, 0), Quaternion.identity);
-                    NewObj.SetActive(true);
-                    NewObj.GetComponent<InteractionObjScript>().Follow = Instantiate(InteractionFollow, this.transform.position + new Vector3(Random.Range(-5, 5), 40 + Random.Range(-5, 5), 0), Quaternion.identity);
-                    SpawnCoolDown = true;
-                    StartCoroutine(CoolDown());
-                }*/
         for (int i = 0; i < 10; i++)
         {
-            Color MusicVal1 = Fourrier.GetPixel(Mathf.RoundToInt(BackgroundMusic.time * 100), i, 0);
-            Color MusicVal2 = Fourrier.GetPixel(Mathf.RoundToInt(BackgroundMusic.time * 100 ) + 1, i, 0);
-            Color MusicVal0 = Fourrier.GetPixel(Mathf.RoundToInt(BackgroundMusic.time * 100 ) - 1, i, 0);
+            Color MusicVal1 = Fourrier.GetPixel(Mathf.RoundToInt(BackgroundMusic.time * BackgroundMusic.clip.frequency/1024), i, 0);
+            Color MusicVal2 = Fourrier.GetPixel(Mathf.RoundToInt(BackgroundMusic.time * BackgroundMusic.clip.frequency / 1024) + 1, i, 0);
+            Color MusicVal0 = Fourrier.GetPixel(Mathf.RoundToInt(BackgroundMusic.time * BackgroundMusic.clip.frequency / 1024 ) - 1, i, 0);
 
             float Rval0 = Mathf.Pow(MusicVal0.r, 2);
             float Rval1 = Mathf.Pow(MusicVal1.r, 2);

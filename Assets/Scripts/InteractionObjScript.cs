@@ -36,14 +36,20 @@ public class InteractionObjScript : MonoBehaviour
             TempParticle.SetActive(true);
             //particleSystemBurst.gameObject.transform.position = this.transform.position;
 
-            particleSystemBurst.Play();
+            TempParticle.GetComponent<ParticleSystem>().Play();
             Destroy(this.gameObject);
             Destroy(Follow);
+            StartCoroutine(DestroyTemp(TempParticle));
 
         }
 
     }
+    public IEnumerator DestroyTemp(GameObject temp)
+    {
+        yield return new WaitForSeconds(4);
+        Destroy(temp);
 
+    }
 
     public void movement()
     {

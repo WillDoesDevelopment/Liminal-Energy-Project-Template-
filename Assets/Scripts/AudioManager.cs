@@ -207,7 +207,9 @@ public class AudioManager : MonoBehaviour
         //int sampledist = (int) frequency / 100;
         int sampledist = numsamples;
         //int[] freqbands = { 40, 56, 65, 82, 90, 108, 115, 124, 140, 160, 260 };
-        int[] freqbands = { 21, 25, 30, 36, 42, 50, 60,72, 84,100, 144 };
+        //int[] freqbands = { 21, 25, 30, 36, 42, 50, 60,72, 84,100, 144 };
+        int[] freqbands = { 4, 5, 6, 7, 8, 10, 12, 14, 16, 20, 30 };
+
         float[] freqscale = { 1f, 1f, 0.1f, 0.001f, };
 
         int numtiles = 1 + (nsamples - numsamples) / sampledist;
@@ -217,7 +219,7 @@ public class AudioManager : MonoBehaviour
 
         double[] MaxE = new double[10] { 0,0,0,0,0,0,0,0,0,0 };
 
-       /* for (int t = 0; t < numtiles; t++)
+        for (int t = 0; t < numtiles; t++)
         {
             Complex[] data = Sample(samples, nchannels, t * sampledist, numsamples);
             Complex[] Freq = FFT(data, false);
@@ -235,7 +237,7 @@ public class AudioManager : MonoBehaviour
                 //Color color = new Color((float)(0.00001 * energy), 0, 0, 1);
 
                 //texture.SetPixel(t,f, color);
-                energyArr[t, f] = (float) energy;
+                energyArr[t, f] = (float)energy;
                 if (energy > MaxE[f])
                 {
                     MaxE[f] = energy;
@@ -243,11 +245,11 @@ public class AudioManager : MonoBehaviour
 
             }
         }
-        for(int t=0; t<numtiles; t++)
+        for (int t = 0; t < numtiles; t++)
         {
-            for(int f=0; f<10; f++)
+            for (int f = 0; f < 10; f++)
             {
-                Color color = new Color((float)(2*(energyArr[t,f])/MaxE[f]), 0, 0, 1);
+                Color color = new Color((float)(2 * (energyArr[t, f]) / MaxE[f]), 0, 0, 1);
                 texture.SetPixel(t, f, color);
             }
         }
@@ -259,8 +261,8 @@ public class AudioManager : MonoBehaviour
         {
             Directory.CreateDirectory(dirPath);
         }
-        File.WriteAllBytes(dirPath + "1K_5K_100sps_FourierTexture2D_new2" + ".png", bytes);
-*/
+        File.WriteAllBytes(dirPath + "0_1k_100sps_FourierTexture2D" + ".png", bytes);
+
 
         //ShaderMat.SetTexture("_musicTexture", texture);
     }
